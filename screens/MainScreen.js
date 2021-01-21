@@ -1,18 +1,23 @@
 import React from 'react';
 import { Button, ScrollView, Text } from 'react-native';
-import { fetchMovies } from '../helpers/fetchMovies';
+import MovieCard from '../components/MovieCard';
+import { apiUrl } from '../data/utils';
+import { useFetchMovies } from '../hooks/useFetchMovies';
 
 const MainScreen = ({navigation}) => {
 
-    fetchMovies();
+    const movies = useFetchMovies(apiUrl);
+    console.log(movies);
 
     return (
         <ScrollView>
-            <Text>Home Screen</Text>
-            <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Movie')}
-            />
+            {
+                movies.loading ?
+                <Text>Por favor espere</Text> :
+                movies.data.results.map((movie) => (
+                    <MovieCard key={movie.id} url={movie.poster_path}/>
+                ))
+            }
         </ScrollView>
     );
 };
