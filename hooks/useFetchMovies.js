@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useFetchMovies = (url) => {
+export const useFetchMovies = (url, page = 1) => {
 
     const isMounted = useRef(true);
     
@@ -15,26 +15,33 @@ export const useFetchMovies = (url) => {
     useEffect(() => {
         
         setState({data: null, loading: true, error: null});
-
-        fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            if(isMounted.current) {
+        let data = {results: []};
+        while(page <= 60) {
+            fetch(`${url}&page=${page++}`)
+            .then(res => res.json())
+            .then(resData => {
+                data.results = [...data.results, ...resData.results];
+                if(isMounted.current) {
+                    setState({
+                        loading: false,
+                        error: null,
+                        data: {
+                            ...resData,
+                            results: data.results
+                        },
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
                 setState({
-                    loading: false,
-                    error: null,
-                    data,
+                    data: null,
+                    loading:  false,
+                    error: 'No se pudo cargar la info'
                 });
-            }
-        })
-        .catch(() => {
-            setState({
-                data: null,
-                loading:  false,
-                error: 'No se pudo cargar la info'
             });
-        });
+        }
     }, [url]);
 
-    return state;
+    return [state, setState];
 };
