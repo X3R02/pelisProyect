@@ -1,10 +1,14 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { Button, ScrollView, Text } from 'react-native';
 
-const MainScreen = () => {
+const MainScreen = ({navigation}) => {
     return (
         <ScrollView>
-            
+            <Text>Home Screen</Text>
+            <Button
+                title="Go to Details"
+                onPress={() => navigation.navigate('Movie')}
+            />
         </ScrollView>
     );
 };
