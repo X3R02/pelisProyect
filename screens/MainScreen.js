@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, Text } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
 import MovieCard from '../components/MovieCard';
 import { apiUrl } from '../data/utils';
 import { useFetchMovies } from '../hooks/useFetchMovies';
