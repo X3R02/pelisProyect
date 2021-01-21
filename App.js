@@ -15,22 +15,28 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={MainScreen}
-          options={{
-            headerStyle: {
-              backgroundColor: '#1a1a1a',
-            },
-            headerTintColor: '#fff',
-            headerRight: () => (
-              <Button
-                onPress={() => alert('This is a button!')}
-                title="Info"
-                color="#fff"
-              />
-            ),
-          }}
+          options={headerOptions}
         />
-        <Stack.Screen name="Movie" component={MovieScreen} />
+        <Stack.Screen
+          name="Movie"
+          component={MovieScreen}
+          options={headerOptions}  
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const headerOptions = {
+  headerStyle: {
+    backgroundColor: '#1a1a1a',
+  },
+  headerTintColor: '#fff',
+  headerRight: () => (
+    <Button
+      onPress={() => alert('This is a button!')}
+      title="opciones"
+      color="#1a1a1a"
+    />
+  ),
+};
